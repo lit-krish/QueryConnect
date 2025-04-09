@@ -22,7 +22,7 @@ const videocall=(io)=>{
             console.log(remoteid)
             console.log(roomid)
             const remote_socket_id=userid_to_socket.get(remoteid)
-            console.log(remote_socket_id)
+            console.log(remote_socket_id,"room id-",roomid)
             socket.to(remote_socket_id).emit("answer-call",({offer,caller_socketid:socket.id,roomid}))
         })
 
