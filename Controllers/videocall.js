@@ -8,7 +8,7 @@ const videocall=(io)=>{
         //console.log("User connected"+socket.id)
 
         socket.on("get-online",(userid)=>{
-            console.log("get online",userid,socketid)
+            console.log("get online",userid,socket.id)
             userid_to_socket.set(userid,socket.id)
         })
 
