@@ -20,6 +20,7 @@ const videocall=(io)=>{
 
         socket.on("start-call",({remoteid,offer,roomid})=>{
             console.log(remoteid)
+            console.log(roomid)
             const remote_socket_id=userid_to_socket.get(remoteid)
             console.log(remote_socket_id)
             socket.to(remote_socket_id).emit("answer-call",(offer,socket.id,roomid))
