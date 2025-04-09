@@ -5,19 +5,23 @@ const videocall=(io)=>{
 
     io.on("connection",(socket)=>{
 
-        console.log("User connected"+socket.id)
+        //console.log("User connected"+socket.id)
 
         socket.on("get-online",(userid)=>{
+            console.log("get online",userid,socketid)
             userid_to_socket.set(userid,socket.id)
         })
 
         socket.on("join-room",(room)=>{
+            console.log("joined room",room)
             socket_to_room.set(socket.id,room)
             socket.emit("room-joined",room)
         })
 
         socket.on("start-call",({remoteid,offer,roomid})=>{
+            console.log(remoteid)
             const remote_socket_id=userid_to_socket.get(remoteid)
+            console.log(remote_socket_id)
             socket.to(remote_socket_id).emit("answer-call",(offer,socket.id,roomid))
         })
 
