@@ -27,6 +27,7 @@ const videocall=(io)=>{
         })
 
         socket.on("call-accepted",({caller_socketid,answer})=>{
+            console.log(caller_socketid)
             socket.to(caller_socketid).emit("call-accepted",{caller_socketid:socket.id,answer})
         })
 
