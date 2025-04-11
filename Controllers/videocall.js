@@ -13,21 +13,21 @@ const videocall=(io)=>{
         })
 
         socket.on("join-room",(room)=>{
-            console.log("joined room",room)
+            //console.log("joined room",room)
             socket_to_room.set(socket.id,room)
             socket.emit("room-joined",room)
         })
 
         socket.on("start-call",({remoteid,offer,roomid})=>{
-            console.log(remoteid)
-            console.log(roomid)
+            //console.log(remoteid)
+            //console.log(roomid)
             const remote_socket_id=userid_to_socket.get(remoteid)
-            console.log(remote_socket_id,"room id-",roomid)
+            //console.log(remote_socket_id,"room id-",roomid)
             socket.to(remote_socket_id).emit("answer-call",{offer,caller_socketid:socket.id,roomid})
         })
 
         socket.on("call-accepted",({caller_socketid,answer})=>{
-            console.log(caller_socketid)
+            //console.log(caller_socketid)
             socket.to(caller_socketid).emit("call-accepted",{caller_socketid:socket.id,answer})
         })
 
@@ -36,11 +36,13 @@ const videocall=(io)=>{
         })
 
         socket.on("nego-needed",({offer,remoteid})=>{
+            console.log("nego needed" , remoteid)
             const remote_socket_id=userid_to_socket.get(remoteid)
             socket.to(remote_socket_id).emit("peer-nego-needed",({offer,caller_socketid:socket.id}))
         })
 
         socket.on("nego-final",({answer,caller_socketid})=>{
+            console.log("final nego",caller_socketid)
             socket.to(caller_socketid).emit("nego-done",answer)
         })
 
