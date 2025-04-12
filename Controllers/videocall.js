@@ -41,6 +41,11 @@ const videocall=(io)=>{
             socket.to(remote_socket_id).emit("peer-nego-needed",({offer,caller_socketid:socket.id}))
         })
 
+        socket.on("nego-needed2",({offer,caller_socketid})=>{
+            console.log("nego needed2" , caller_socketid)
+            socket.to(caller_socketid).emit("peer-nego-needed",({offer,reciver_socketid:socket.id}))
+        })
+        
         socket.on("nego-final",({answer,caller_socketid})=>{
             console.log("final nego",caller_socketid)
             socket.to(caller_socketid).emit("nego-done",answer)
