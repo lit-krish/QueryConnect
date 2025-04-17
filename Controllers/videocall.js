@@ -46,6 +46,13 @@ const videocall=(io)=>{
             socket.to(remote_socketid).emit("nego-done",answer)
         })
 
+        socket.on("ice-candidate", ({ to, candidate }) => {
+       if (to) {
+        socket.to(to).emit("ice-candidate", { candidate });
+        }
+        });
+
+
         socket.on("disconnect", () => {
             userid_to_socket.forEach((val, key) => {
                 if (val === socket.id) userid_to_socket.delete(key);
