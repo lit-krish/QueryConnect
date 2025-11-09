@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import { google } from "googleapis"
 import Teacher from "../Models/Teacher.js"
 import jwt from "jsonwebtoken"
+import {MailtrapTransport} from "mailtrap"
 
 dotenv.config()
 
@@ -18,17 +19,12 @@ oauth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN })
 
 const accessToken = await oauth2Client.getAccessToken()
 
-const transporter = nodemailer.createTransport({
-  service: 'Gmail',
-  auth: {
-    type: "OAUTH2",
-    user: process.env.email,
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    refreshToken: process.env.REFRESH_TOKEN,
-    accessToken: accessToken.token
-  }
-});
+const transporter = nodemailer.createTransport(
+  MailtrapTransport({
+    token: process.env.MailTrap,
+
+  })
+);
 
 export const loginandsignup = async (req, res) => {
   const { email } = req.body
