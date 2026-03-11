@@ -32,6 +32,7 @@ videocall(io)
 
 app.get("/",(req,res)=>{
     res.send("Server running on port 8000")
+    console.log("just a git push")
 })
 
 server.listen(8000,()=>{
